@@ -10,5 +10,5 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-# Gunicorn irá escutar em 0.0.0.0 e na porta definida pela variável $PORT injetada pelo Render
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+# CORREÇÃO APLICADA AQUI:
+CMD gunicorn --bind "0.0.0.0:$PORT" app:app
