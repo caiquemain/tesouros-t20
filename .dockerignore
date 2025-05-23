@@ -1,0 +1,57 @@
+# Arquivos e pastas do Git
+.git
+.gitignore
+
+# Ambientes virtuais Python
+venv
+.venv
+env
+.env
+*_env
+env.bak
+venv.bak
+
+# Arquivos de cache e bytecode do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos e pastas de configuração de IDEs
+.vscode/
+.idea/
+*.project
+*.pydevproject
+*.sublime-workspace
+
+# Arquivos específicos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de Docker (não precisam estar dentro da imagem)
+Dockerfile
+.dockerignore
+
+# Arquivos de dependências baixadas localmente (se aplicável, ex: node_modules se usar JS)
+# node_modules/
+
+# Arquivos de build e distribuição (se você construir pacotes Python)
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Arquivos de teste e cobertura (a menos que você precise rodar testes na imagem final)
+.pytest_cache/
+.coverage
+htmlcov/
+nosetests.xml
+coverage.xml
+
+# Arquivos de log locais
+*.log
+
+# Arquivos temporários e de backup
+*~
+*.bak
+*.swp

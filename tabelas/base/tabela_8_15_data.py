@@ -1,0 +1,32 @@
+# tabelas/base/tabela_8_15_data.py
+
+ACESSORIOS_MAIORES_DATA = [
+    {"d_min": 1, "d_max": 2, "nome_acessorio": "Elmo do teletransporte", "preco_ts": 30000},
+    {"d_min": 3, "d_max": 4, "nome_acessorio": "Gema da telepatia", "preco_ts": 30000},
+    {"d_min": 5, "d_max": 9, "nome_acessorio": "Gema elemental", "preco_ts": 30000},
+    {"d_min": 10, "d_max": 15,
+        "nome_acessorio": "Manual da saúde corporal", "preco_ts": 30000},
+    {"d_min": 16, "d_max": 21,
+        "nome_acessorio": "Manual do bom exercício", "preco_ts": 30000},
+    {"d_min": 22, "d_max": 27,
+        "nome_acessorio": "Manual dos movimentos precisos", "preco_ts": 30000},
+    {"d_min": 28, "d_max": 34, "nome_acessorio": "Medalhão de Lena", "preco_ts": 30000},
+    {"d_min": 35, "d_max": 40, "nome_acessorio": "Tomo da compreensão", "preco_ts": 30000},
+    {"d_min": 41, "d_max": 46,
+        "nome_acessorio": "Tomo da liderança e influência", "preco_ts": 30000},
+    {"d_min": 47, "d_max": 52,
+        "nome_acessorio": "Tomo dos grandes pensamentos", "preco_ts": 30000},
+    {"d_min": 53, "d_max": 57, "nome_acessorio": "Anel refletor", "preco_ts": 51000},
+    {"d_min": 58, "d_max": 60, "nome_acessorio": "Cinto do campeão", "preco_ts": 51000},
+    {"d_min": 61, "d_max": 67, "nome_acessorio": "Colar guardião", "preco_ts": 51000},
+    {"d_min": 68, "d_max": 72, "nome_acessorio": "Estatueta animista", "preco_ts": 51000},
+    {"d_min": 73, "d_max": 77, "nome_acessorio": "Anel da liberdade", "preco_ts": 60000},
+    {"d_min": 78, "d_max": 82, "nome_acessorio": "Tapete voador", "preco_ts": 60000},
+    {"d_min": 83, "d_max": 87, "nome_acessorio": "Braceletes de ouro", "preco_ts": 64500},
+    {"d_min": 88, "d_max": 89, "nome_acessorio": "Espelho da oposição", "preco_ts": 75000},
+    {"d_min": 90, "d_max": 94, "nome_acessorio": "Robe do arquimago", "preco_ts": 90000},
+    {"d_min": 95, "d_max": 96, "nome_acessorio": "Orbe das tempestades", "preco_ts": 97500},
+    {"d_min": 97, "d_max": 98, "nome_acessorio": "Anel da regeneração", "preco_ts": 150000},
+    {"d_min": 99, "d_max": 100,
+        "nome_acessorio": "Espelho do aprisionamento", "preco_ts": 150000}
+]

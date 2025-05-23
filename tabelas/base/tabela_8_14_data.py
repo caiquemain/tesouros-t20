@@ -1,0 +1,30 @@
+# tabelas/base/tabela_8_14_data.py
+
+ACESSORIOS_MEDIOS_DATA = [
+    {"d_min": 1, "d_max": 4, "nome_acessorio": "Anel de telecinesia", "preco_ts": 10500},
+    {"d_min": 5, "d_max": 8, "nome_acessorio": "Bola de cristal", "preco_ts": 10500},
+    {"d_min": 9, "d_max": 10, "nome_acessorio": "Caveira maldita", "preco_ts": 10500},
+    {"d_min": 11, "d_max": 14, "nome_acessorio": "Botas aladas", "preco_ts": 15000},
+    {"d_min": 15, "d_max": 18, "nome_acessorio": "Braceletes de bronze", "preco_ts": 16500},
+    {"d_min": 19, "d_max": 24, "nome_acessorio": "Anel da energia", "preco_ts": 21000},
+    {"d_min": 25, "d_max": 30, "nome_acessorio": "Anel da vitalidade", "preco_ts": 21000},
+    {"d_min": 31, "d_max": 34,
+        "nome_acessorio": "Anel de invisibilidade", "preco_ts": 21000},
+    {"d_min": 35, "d_max": 38,
+        "nome_acessorio": "Braçadeiras do arqueiro", "preco_ts": 21000},
+    {"d_min": 39, "d_max": 42, "nome_acessorio": "Brincos de Marah", "preco_ts": 21000},
+    {"d_min": 43, "d_max": 46, "nome_acessorio": "Faixas do pugilista", "preco_ts": 21000},
+    {"d_min": 47, "d_max": 50, "nome_acessorio": "Manto da aranha", "preco_ts": 21000},
+    {"d_min": 51, "d_max": 54, "nome_acessorio": "Vassoura voadora", "preco_ts": 21000},
+    {"d_min": 55, "d_max": 58, "nome_acessorio": "Símbolo abençoado", "preco_ts": 21000},
+    {"d_min": 59, "d_max": 64, "nome_acessorio": "Amuleto da robustez", "preco_ts": 25500},
+    {"d_min": 65, "d_max": 68, "nome_acessorio": "Botas velozes", "preco_ts": 25500},
+    {"d_min": 69, "d_max": 74,
+        "nome_acessorio": "Cinto da força do gigante", "preco_ts": 25500},
+    {"d_min": 75, "d_max": 80, "nome_acessorio": "Coroa majestosa", "preco_ts": 25500},
+    {"d_min": 81, "d_max": 86, "nome_acessorio": "Estola da serenidade", "preco_ts": 25500},
+    {"d_min": 87, "d_max": 88, "nome_acessorio": "Manto do morcego", "preco_ts": 25500},
+    {"d_min": 89, "d_max": 94,
+        "nome_acessorio": "Pulseiras da celeridade", "preco_ts": 25500},
+    {"d_min": 95, "d_max": 100, "nome_acessorio": "Tiara da sapiência", "preco_ts": 25500}
+]
