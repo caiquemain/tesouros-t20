@@ -4,34 +4,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rolador de Tesouros T20 (Revisado v2)</title>
+    <title>Rolador de Tesouros T20 (v6 Modo Escuro)</title>
     <style>
+        /* Definição de variáveis de cor para os temas */
+        :root {
+            --cor-fundo-body: #f0f2f5;
+            --cor-texto-body: #1c1e21;
+            --cor-fundo-container: #ffffff;
+            --cor-borda-container: #e0e0e0;
+            --cor-titulo-h1: #5a0078;
+            --cor-label: #4b4f56;
+            --cor-input-select-fundo: #ffffff;
+            --cor-input-select-texto: #1c1e21;
+            --cor-input-select-borda: #ccd0d5;
+            --cor-input-select-foco-borda: #5a0078;
+            --cor-input-select-foco-sombra: rgba(90, 0, 120, 0.15);
+            --cor-botao-fundo: #5a0078;
+            --cor-botao-texto: #ffffff;
+            --cor-botao-hover-fundo: #4a0063;
+            --cor-fundo-nd-entry: #f9f9f9;
+            --cor-borda-nd-entry: #e0e0e0;
+            --cor-fundo-resultado: #f9fafb;
+            --cor-borda-resultado: #e0e0e0;
+            --cor-borda-bundle-tesouro: #b39ddb;
+            --cor-fundo-bundle-tesouro: #f5f3f7;
+            --cor-fundo-item-tesouro: #ffffff;
+            --cor-borda-item-tesouro: #e8e8e8;
+            --cor-borda-esquerda-subitem: #5a0078;
+            --cor-rolagem-detalhe-texto: #006400;
+            --cor-rolagem-detalhe-fundo: #f0fff0;
+            --cor-rolagem-detalhe-borda: #d0f0d0;
+            --cor-log-geral-fundo: #e9e3f5;
+            --cor-log-geral-borda: #d1c4e9;
+            --cor-log-completo-fundo: #2d2d2d;
+            --cor-log-completo-texto: #dcdcdc;
+            --cor-log-completo-borda: #444;
+            --cor-erro-fundo: #ffebee;
+            --cor-erro-texto: #c62828;
+            --cor-erro-borda: #ef9a9a;
+        }
+
+        body.dark-mode {
+            --cor-fundo-body: #1a1a1a;
+            --cor-texto-body: #e0e0e0;
+            --cor-fundo-container: #2c2c2c;
+            --cor-borda-container: #444444;
+            --cor-titulo-h1: #c792ea;
+            /* Lilás mais claro para contraste */
+            --cor-label: #cccccc;
+            --cor-input-select-fundo: #3a3a3a;
+            --cor-input-select-texto: #e0e0e0;
+            --cor-input-select-borda: #555555;
+            --cor-input-select-foco-borda: #c792ea;
+            --cor-input-select-foco-sombra: rgba(199, 146, 234, 0.25);
+            --cor-botao-fundo: #7e57c2;
+            /* Lilás um pouco mais claro */
+            --cor-botao-texto: #ffffff;
+            --cor-botao-hover-fundo: #673ab7;
+            --cor-fundo-nd-entry: #333333;
+            --cor-borda-nd-entry: #4f4f4f;
+            --cor-fundo-resultado: #252525;
+            --cor-borda-resultado: #484848;
+            --cor-borda-bundle-tesouro: #7e57c2;
+            --cor-fundo-bundle-tesouro: #30283e;
+            --cor-fundo-item-tesouro: #3a3a3a;
+            --cor-borda-item-tesouro: #505050;
+            --cor-borda-esquerda-subitem: #c792ea;
+            --cor-rolagem-detalhe-texto: #a5d6a7;
+            /* Verde claro */
+            --cor-rolagem-detalhe-fundo: #1b301c;
+            --cor-rolagem-detalhe-borda: #2e4b2f;
+            --cor-log-geral-fundo: #2c283a;
+            --cor-log-geral-borda: #413a53;
+            --cor-log-completo-fundo: #1e1e1e;
+            /* Mantém escuro, mas pode ajustar texto/borda */
+            --cor-log-completo-texto: #c0c0c0;
+            --cor-log-completo-borda: #333333;
+            --cor-erro-fundo: #521818;
+            --cor-erro-texto: #ffcdd2;
+            --cor-erro-borda: #813333;
+        }
+
+        /* Estilos Base usando variáveis */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f0f2f5;
-            color: #1c1e21;
-            line-height: 1.6
+            background-color: var(--cor-fundo-body);
+            color: var(--cor-texto-body);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
-            background-color: #fff;
+            background-color: var(--cor-fundo-container);
             padding: 25px 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 800px;
             margin: 20px auto;
-            text-align: left
+            text-align: left;
+            border: 1px solid var(--cor-borda-container);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         h1 {
-            color: #5a0078;
+            color: var(--cor-titulo-h1);
             margin-bottom: 25px;
             font-size: 28px;
             text-align: center;
-            font-weight: 600
+            font-weight: 600;
         }
 
         label {
@@ -39,8 +122,8 @@
             margin-top: 12px;
             margin-bottom: 4px;
             font-weight: bold;
-            color: #4b4f56;
-            font-size: .95em
+            color: var(--cor-label);
+            font-size: .95em;
         }
 
         select,
@@ -48,16 +131,26 @@
             padding: 10px;
             margin-top: 3px;
             border-radius: 5px;
-            border: 1px solid #ccd0d5;
+            border: 1px solid var(--cor-input-select-borda);
             width: 100%;
             font-size: 15px;
             box-sizing: border-box;
-            background-color: #fff
+            background-color: var(--cor-input-select-fundo);
+            color: var(--cor-input-select-texto);
         }
 
-        button {
-            background-color: #5a0078;
-            color: #fff;
+        select:focus,
+        input[type=number]:focus {
+            border-color: var(--cor-input-select-foco-borda);
+            box-shadow: 0 0 0 3px var(--cor-input-select-foco-sombra);
+            outline: none;
+        }
+
+        button,
+        .toggle-dark-mode-btn {
+            /* Aplicando estilo base ao novo botão também */
+            background-color: var(--cor-botao-fundo);
+            color: var(--cor-botao-texto);
             cursor: pointer;
             padding: 12px 18px;
             border: none;
@@ -65,11 +158,12 @@
             font-size: 16px;
             font-weight: bold;
             margin-top: 20px;
-            transition: background-color .2s ease-in-out
+            transition: background-color .2s ease-in-out;
         }
 
-        button:hover {
-            background-color: #4a0063
+        button:hover,
+        .toggle-dark-mode-btn:hover {
+            background-color: var(--cor-botao-hover-fundo);
         }
 
         .nd-entry {
@@ -78,9 +172,9 @@
             gap: 10px;
             margin-bottom: 15px;
             padding: 15px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--cor-borda-nd-entry);
             border-radius: 6px;
-            background-color: #f9f9f9
+            background-color: var(--cor-fundo-nd-entry);
         }
 
         .nd-entry>div {
@@ -120,9 +214,9 @@
         #js-erro-box {
             margin-top: 20px;
             padding: 15px;
-            background-color: #ffebee;
-            color: #c62828;
-            border: 1px solid #ef9a9a;
+            background-color: var(--cor-erro-fundo);
+            color: var(--cor-erro-texto);
+            border: 1px solid var(--cor-erro-borda);
             border-radius: 6px;
             font-weight: 500
         }
@@ -134,16 +228,16 @@
         .resultado-container {
             margin-top: 30px;
             padding: 20px;
-            border: 1px solid #e0e0e0;
-            background-color: #f9fafb;
+            border: 1px solid var(--cor-borda-resultado);
+            background-color: var(--cor-fundo-resultado);
             border-radius: 8px
         }
 
         .resultado-container h2 {
             margin-top: 0;
             font-size: 24px;
-            color: #5a0078;
-            border-bottom: 2px solid #e0e0e0;
+            color: var(--cor-titulo-h1);
+            border-bottom: 2px solid var(--cor-borda-resultado);
             padding-bottom: 10px;
             margin-bottom: 20px;
             font-weight: 600
@@ -151,10 +245,10 @@
 
         .resultado-container h3 {
             font-size: 19px;
-            color: #333;
+            color: var(--cor-texto-body);
             margin-top: 25px;
             margin-bottom: 12px;
-            border-bottom: 1px dashed #ccc;
+            border-bottom: 1px dashed var(--cor-input-select-borda);
             padding-bottom: 8px;
             font-weight: 500
         }
@@ -165,16 +259,16 @@
         }
 
         .resultado-container>ul>li.tesouro-bundle {
-            border: 1px solid #b39ddb;
+            border: 1px solid var(--cor-borda-bundle-tesouro);
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 6px;
-            background-color: #f5f3f7
+            background-color: var(--cor-fundo-bundle-tesouro)
         }
 
         .resultado-container>ul>li>ul>li {
-            background-color: #fff;
-            border: 1px solid #e8e8e8;
+            background-color: var(--cor-fundo-item-tesouro);
+            border: 1px solid var(--cor-borda-item-tesouro);
             padding: 12px 15px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -187,10 +281,10 @@
         }
 
         .resultado-container ul ul li {
-            background-color: #fdfdfd;
+            background-color: var(--cor-fundo-item-tesouro);
             padding: 8px 10px;
             font-size: .95em;
-            border-left: 3px solid #5a0078
+            border-left: 3px solid var(--cor-borda-esquerda-subitem)
         }
 
         .item-principal {
@@ -199,7 +293,7 @@
 
         .item-detalhe {
             font-size: .9em;
-            color: #555;
+            color: var(--cor-label);
             display: block;
             margin-left: 5px
         }
@@ -207,30 +301,30 @@
         .rolagem-detalhe {
             font-family: "Consolas", "Menlo", "Courier New", Courier, monospace;
             font-size: .85em;
-            color: #006400;
+            color: var(--cor-rolagem-detalhe-texto);
             margin-left: 10px;
             display: block;
             margin-top: 4px;
             padding: 5px;
-            background-color: #f0fff0;
+            background-color: var(--cor-rolagem-detalhe-fundo);
             border-radius: 3px;
-            border: 1px solid #d0f0d0
+            border: 1px solid var(--cor-rolagem-detalhe-borda);
         }
 
         .log-geral-rolagens {
             margin-top: 15px;
             margin-bottom: 20px;
             padding: 10px;
-            background-color: #e9e3f5;
-            border: 1px solid #d1c4e9;
+            background-color: var(--cor-log-geral-fundo);
+            border: 1px solid var(--cor-log-geral-borda);
             border-radius: 4px;
             font-size: .9em;
             font-family: "Consolas", "Menlo", "Courier New", Courier, monospace;
-            line-height: 1.5
+            line-height: 1.5;
         }
 
         .log-geral-rolagens strong {
-            color: #5a0078
+            color: var(--cor-titulo-h1)
         }
 
         .log-geral-rolagens div {
@@ -243,15 +337,15 @@
             white-space: pre-wrap;
             overflow-wrap: break-word;
             word-wrap: break-word;
-            background-color: #2d2d2d;
-            color: #dcdcdc;
+            background-color: var(--cor-log-completo-fundo);
+            color: var(--cor-log-completo-texto);
             padding: 15px;
             border-radius: 6px;
             max-height: 400px;
             overflow-y: auto;
             overflow-x: auto;
             margin-top: 15px;
-            border: 1px solid #444;
+            border: 1px solid var(--cor-log-completo-borda);
             line-height: 1.4;
             box-sizing: border-box;
             position: relative
@@ -260,12 +354,27 @@
         .log-completo-box div {
             margin-bottom: 3px
         }
+
+        /* Estilo para o botão de alternar modo escuro */
+        .toggle-dark-mode-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 8px 12px;
+            font-size: 14px;
+            z-index: 1000;
+            /* Para ficar acima de outros elementos */
+            margin-top: 0;
+            /* Sobrescreve a margem padrão de botões */
+        }
     </style>
 </head>
 
 <body>
+    <button id="toggle-dark-mode" class="toggle-dark-mode-btn">Alternar Modo Escuro</button>
+
     <div class="container">
-        <h1>Rolador de Tesouros Tormenta 20 (Revisado v2)</h1>
+        <h1>Rolador de Tesouros Tormenta 20 (v6 Modo Escuro)</h1>
 
         <form id="form-tesouros">
             <div id="nd-entries-container">
@@ -279,8 +388,7 @@
             <p><strong>Erro do Servidor:</strong> {{ erro }}</p>
         </div>
         {% endif %}
-        <div id="js-erro-box" class="erro-box"></div> {# Caixa de erro para o JavaScript popular, com a classe .erro-box
-        #}
+        <div id="js-erro-box" class="erro-box"></div>
 
         <div id="resultados-multiplos-container">
             {% if tesouros_processados %}
@@ -350,17 +458,18 @@
                                         encanto.nome }}</strong> {% if encanto.preco_ts %}(Preço: {{ encanto.preco_ts }}
                                     T$){% endif %}</li>{% else %}<li>{{ encanto.nome }}: {{ encanto.efeito }} {% if
                                     encanto.custo %}(Custo: {{ encanto.custo }}){% endif %}</li>{% endif %}{% endfor %}
-                            </ul>{% endif %}{% if item_gerado.detalhes_rolagem_especifica or
-                            item_gerado.detalhes_rolagem_conjunto %}{% for detalhe_rol in
-                            (item_gerado.detalhes_rolagem_especifica or item_gerado.detalhes_rolagem_conjunto) %}<span
-                                class="rolagem-detalhe">{{ detalhe_rol }}</span>{% endfor %}{% endif %}
+                            </ul>{% endif %}
+                            {% if item_gerado.detalhes_rolagem_especifica or item_gerado.detalhes_rolagem_conjunto %}{%
+                            for detalhe_rol in (item_gerado.detalhes_rolagem_especifica or
+                            item_gerado.detalhes_rolagem_conjunto) %}<span class="rolagem-detalhe">{{ detalhe_rol
+                                }}</span>{% endfor %}{% endif %}
                         </li>{% endfor %}</ul>{% endif %}
                     {% if tesouro_item_data.log_completo_rolagens %}<h3
                         style="margin-top:20px;font-size:1em;color:#666;">Log de Processamento:</h3>
                     <div class="log-completo-box"
-                        style="max-height:150px;font-size:.85em;background-color:#f0f0f0;color:#444;">{% for log_entry
-                        in tesouro_item_data.log_completo_rolagens %}<div>{{ log_entry }}</div>{% endfor %}</div>{%
-                    endif %}
+                        style="max-height:150px;font-size:.85em;background-color:var(--cor-log-completo-fundo); color: var(--cor-log-completo-texto); border: 1px solid var(--cor-log-completo-borda);">
+                        {% for log_entry in tesouro_item_data.log_completo_rolagens %}<div>{{ log_entry }}</div>{%
+                        endfor %}</div>{% endif %}
                 </li>
                 {% endfor %}
             </ul>
@@ -374,11 +483,6 @@
     </div>
 
     <script>
-        // --------------------------------------------------------------------
-        // TESTE INICIAL ABSOLUTO: Este alert DEVE aparecer se o script rodar.
-        // --------------------------------------------------------------------
-        alert("ALERTA DE TESTE: O bloco de script em rolar_tesouro.html está começando a ser executado!");
-
         document.addEventListener('DOMContentLoaded', function () {
             console.log("LOG: Evento DOMContentLoaded disparado. Script principal iniciando.");
 
@@ -387,20 +491,20 @@
             const addNdButton = document.getElementById('add-nd-btn');
             const formTesouros = document.getElementById('form-tesouros');
             const jsErroBox = document.getElementById('js-erro-box');
+            const toggleDarkModeButton = document.getElementById('toggle-dark-mode'); // Botão do modo escuro
 
+            // Verificações básicas de elementos
             if (!ndEntriesContainer) console.error("ERRO DOM: 'nd-entries-container' não encontrado!");
             if (!addNdButton) console.error("ERRO DOM: 'add-nd-btn' não encontrado!");
             if (!formTesouros) console.error("ERRO DOM: 'form-tesouros' não encontrado!");
             if (!jsErroBox) console.error("ERRO DOM: 'js-erro-box' não encontrado!");
+            if (!toggleDarkModeButton) console.error("ERRO DOM: 'toggle-dark-mode' (botão modo escuro) não encontrado!");
 
             // --- Dados do Flask ---
-            // Estes blocos {{ ... }} são substituídos pelo Flask ANTES de o navegador receber o HTML.
-            // O VSCode pode mostrar erros aqui porque não entende Jinja, mas deve funcionar no navegador.
             let ndKeysDisponiveis = {{ nd_keys_disponiveis| tojson | safe
         }};
         let tiposTesouroDisponiveis = {{ tipos_tesouro_disponiveis| tojson | safe }};
 
-        // Validação e fallback para os dados do Flask
         if (!Array.isArray(ndKeysDisponiveis)) {
             console.warn("AVISO: 'nd_keys_disponiveis' não é um array ou é null. Usando array vazio. Valor recebido:", ndKeysDisponiveis);
             ndKeysDisponiveis = [];
@@ -409,28 +513,50 @@
             console.warn("AVISO: 'tiposTesouroDisponiveis' não é um array ou é null. Usando array vazio. Valor recebido:", tiposTesouroDisponiveis);
             tiposTesouroDisponiveis = [];
         }
-
         console.log("LOG: NDs Disponíveis (processados no JS):", ndKeysDisponiveis);
         console.log("LOG: Tipos de Tesouro (processados no JS):", tiposTesouroDisponiveis);
 
         let entryCounter = 0;
 
-        // --- Funções ---
-        window.removeNdEntryJS = function (entryId) { // Exposta globalmente para o onclick
-            const entry = document.getElementById(entryId);
-            if (entry) {
-                entry.remove();
-                console.log(`LOG: Entrada de ND '${entryId}' removida.`);
+        // --- Lógica Modo Escuro ---
+        function applyDarkModePreference() {
+            const currentMode = localStorage.getItem('theme');
+            if (currentMode === 'dark') {
+                document.body.classList.add('dark-mode');
+                if (toggleDarkModeButton) toggleDarkModeButton.textContent = 'Modo Claro';
+                console.log("LOG: Modo escuro aplicado via localStorage.");
             } else {
-                console.warn(`AVISO: Tentativa de remover entrada '${entryId}' falhou: elemento não encontrado.`);
+                document.body.classList.remove('dark-mode');
+                if (toggleDarkModeButton) toggleDarkModeButton.textContent = 'Modo Escuro';
+                console.log("LOG: Modo claro aplicado (padrão ou via localStorage).");
             }
         }
 
+        if (toggleDarkModeButton) {
+            toggleDarkModeButton.addEventListener('click', function () {
+                document.body.classList.toggle('dark-mode');
+                let theme = 'light';
+                if (document.body.classList.contains('dark-mode')) {
+                    theme = 'dark';
+                    toggleDarkModeButton.textContent = 'Modo Claro';
+                } else {
+                    toggleDarkModeButton.textContent = 'Modo Escuro';
+                }
+                localStorage.setItem('theme', theme);
+                console.log(`LOG: Tema alterado para ${theme} e salvo no localStorage.`);
+            });
+        }
+        applyDarkModePreference(); // Aplica na carga da página
+
+        // --- Funções de Geração de Entradas de ND ---
+        window.removeNdEntryJS = function (entryId) {
+            const entry = document.getElementById(entryId);
+            if (entry) { entry.remove(); console.log(`LOG: Entrada de ND '${entryId}' removida.`); }
+            else { console.warn(`AVISO: Tentativa de remover entrada '${entryId}' falhou: elemento não encontrado.`); }
+        }
+
         function addNdEntry(ndSelecionado = null, quantidade = 1, tipoTesouro = "Padrão") {
-            if (!ndEntriesContainer) {
-                console.error("ERRO: Não é possível adicionar entrada, 'nd-entries-container' não encontrado.");
-                return;
-            }
+            if (!ndEntriesContainer) { console.error("ERRO: 'nd-entries-container' não encontrado."); return; }
             entryCounter++;
             const entryId = 'nd-entry-' + entryCounter;
             console.log(`LOG: Adicionando entrada de ND #${entryCounter} (ID: ${entryId}). ND Padrão: ${ndSelecionado}`);
@@ -441,42 +567,25 @@
 
             let ndOptionsHtml = '';
             if (ndKeysDisponiveis.length > 0) {
-                ndKeysDisponiveis.forEach(key => {
-                    ndOptionsHtml += `<option value="${key}" ${key === ndSelecionado ? 'selected' : ''}>${key}</option>`;
-                });
-            } else {
-                ndOptionsHtml = '<option value="">-- NDs Indisponíveis --</option>';
-            }
+                ndKeysDisponiveis.forEach(key => { ndOptionsHtml += `<option value="${key}" ${key === ndSelecionado ? 'selected' : ''}>${key}</option>`; });
+            } else { ndOptionsHtml = '<option value="">-- NDs Indisponíveis --</option>'; }
 
             let tipoOptionsHtml = '';
             if (tiposTesouroDisponiveis.length > 0) {
-                tiposTesouroDisponiveis.forEach(tipo => {
-                    tipoOptionsHtml += `<option value="${tipo}" ${tipo === tipoTesouro ? 'selected' : ''}>${tipo}</option>`;
-                });
-            } else {
-                tipoOptionsHtml = '<option value="Padrão">Padrão (Tipos Indisponíveis)</option>';
-            }
+                tiposTesouroDisponiveis.forEach(tipo => { tipoOptionsHtml += `<option value="${tipo}" ${tipo === tipoTesouro ? 'selected' : ''}>${tipo}</option>`; });
+            } else { tipoOptionsHtml = '<option value="Padrão">Padrão</option>'; }
 
             entryDiv.innerHTML = `
-                    <div>
-                        <label for="nd_chave_${entryCounter}">ND:</label>
-                        <select name="nd_chave" id="nd_chave_${entryCounter}" ${ndKeysDisponiveis.length === 0 ? 'disabled' : ''}>${ndOptionsHtml}</select>
-                    </div>
-                    <div>
-                        <label for="quantidade_${entryCounter}">Qtd:</label>
-                        <input type="number" name="quantidade" id="quantidade_${entryCounter}" value="${quantidade}" min="1" style="width: 70px;">
-                    </div>
-                    <div>
-                        <label for="tipo_tesouro_${entryCounter}">Tipo:</label>
-                        <select name="tipo_tesouro" id="tipo_tesouro_${entryCounter}">${tipoOptionsHtml}</select>
-                    </div>
+                    <div><label for="nd_chave_${entryCounter}">ND:</label><select name="nd_chave" id="nd_chave_${entryCounter}" ${ndKeysDisponiveis.length === 0 ? 'disabled' : ''}>${ndOptionsHtml}</select></div>
+                    <div><label for="quantidade_${entryCounter}">Qtd:</label><input type="number" name="quantidade" id="quantidade_${entryCounter}" value="${quantidade}" min="1" style="width: 70px;"></div>
+                    <div><label for="tipo_tesouro_${entryCounter}">Tipo:</label><select name="tipo_tesouro" id="tipo_tesouro_${entryCounter}">${tipoOptionsHtml}</select></div>
                     <button type="button" class="remove-btn" onclick="removeNdEntryJS('${entryId}')">X</button>
                 `;
             ndEntriesContainer.appendChild(entryDiv);
             console.log(`LOG: Entrada de ND #${entryCounter} adicionada ao DOM.`);
         }
 
-        // --- Event Listeners e Inicialização ---
+        // --- Event Listeners e Inicialização de Entradas de ND ---
         if (addNdButton) {
             addNdButton.addEventListener('click', function () {
                 console.log("LOG: Botão 'Adicionar Outro ND' clicado.");
@@ -490,7 +599,7 @@
             formTesouros.addEventListener('submit', function (event) {
                 event.preventDefault();
                 console.log("LOG: Formulário 'form-tesouros' submetido.");
-                if (jsErroBox) { jsErroBox.innerHTML = ''; jsErroBox.style.display = 'none'; } // Limpa erro JS
+                if (jsErroBox) { jsErroBox.innerHTML = ''; jsErroBox.style.display = 'none'; }
 
                 const entries = ndEntriesContainer.getElementsByClassName('nd-entry');
                 let dataParaEnviar = [];
@@ -505,10 +614,7 @@
                 console.log("LOG: Dados para enviar:", dataParaEnviar);
 
                 if (dataParaEnviar.length === 0) {
-                    if (jsErroBox) {
-                        jsErroBox.innerHTML = '<p>Adicione pelo menos uma entrada de ND válida.</p>';
-                        jsErroBox.style.display = 'block';
-                    }
+                    if (jsErroBox) { jsErroBox.innerHTML = '<p>Adicione pelo menos uma entrada de ND válida.</p>'; jsErroBox.style.display = 'block'; }
                     console.warn("AVISO: Nenhuma entrada válida para submissão.");
                     return;
                 }
@@ -544,10 +650,7 @@
                     })
                     .catch(error => {
                         console.error('ERRO Fetch:', error);
-                        if (jsErroBox) {
-                            jsErroBox.innerHTML = `<p>Erro de comunicação: ${error.message}</p>`;
-                            jsErroBox.style.display = 'block';
-                        }
+                        if (jsErroBox) { jsErroBox.innerHTML = `<p>Erro de comunicação: ${error.message}</p>`; jsErroBox.style.display = 'block'; }
                     });
             });
             console.log("LOG: Listener do formulário 'form-tesouros' configurado.");
