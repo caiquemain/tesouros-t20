@@ -1,118 +1,147 @@
-# app.py
-from flask import Flask, render_template, request, redirect, url_for
-import logging  # Para logs no servidor
-
-# Importa a função principal do nosso core e a TABELA_8_1 para as chaves de ND
-from core.tesouros import gerar_tesouro_completo_por_nd
-# Usada para popular o dropdown de NDs
 from tabelas.base.tabela_8_1_data import TABELA_8_1
+from core.tesouros import gerar_tesouro_completo_por_nd
+from flask import Flask, render_template, request, url_for
+import os  # Para garantir que os caminhos de importação funcionem corretamente
+
+# Adiciona o diretório raiz ao sys.path para garantir que os módulos de 'core' e 'tabelas' sejam encontrados
+# Isso é útil se você estiver executando o app de um subdiretório ou se a estrutura for mais complexa.
+# Se 'core' e 'tabelas' já estiverem no PYTHONPATH ou no mesmo diretório, isso pode não ser estritamente necessário.
+import sys
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+
+# Importa a função principal de geração de tesouros do seu módulo 'core'
+
+# Importa os dados da Tabela 8-1 para obter as chaves de ND disponíveis
+# (Assumindo que o __init__.py nas pastas 'tabelas' e 'tabelas/base' permite esses imports)
 
 app = Flask(__name__)
-# Considere adicionar uma app.secret_key se for usar sessions no futuro
-# app.secret_key = 'uma_chave_secreta_muito_forte_aqui!'
-
-# Configuração básica de logging para o Flask
-# Não configurar se já estiver em modo debug (que tem seu próprio logger)
-if not app.debug:
-    app.logger.setLevel(logging.INFO)
-    # Poderia adicionar handlers para arquivos, etc., se necessário
-    # Por enquanto, o output padrão do Flask (console) é suficiente.
-
-# Obtém as chaves de ND válidas da Tabela 8-1 para o formulário
-# Tenta uma ordenação que lide com frações e números
-valid_nd_keys = list(TABELA_8_1.keys())
-try:
-    def nd_sort_key(nd_str_key):
-        if '/' in nd_str_key:
-            num, den = map(float, nd_str_key.split('/'))
-            return num / den
-        return float(nd_str_key)
-    valid_nd_keys.sort(key=nd_sort_key)
-except ValueError:
-    valid_nd_keys.sort()  # Fallback para ordenação de string se a conversão falhar
+# Necessário para 'flash messages', embora não estejamos usando flash aqui, é uma boa prática.
+app.secret_key = os.urandom(24)
 
 
-@app.route('/')
-def index():
-    return redirect(url_for('rolar_tesouro_page'))
+def get_select_options():
+    """
+    Prepara os dados para os menus <select> no HTML.
+    """
+    # Obtém as chaves de ND da TABELA_8_1 e as ordena.
+    # A ordenação tenta lidar com frações (ex: "1/4", "1/2") corretamente.
+    nd_keys_raw = list(TABELA_8_1.keys())
+    try:
+        # Tenta ordenar numericamente, convertendo frações para float
+        nd_keys_sorted = sorted(
+            nd_keys_raw, key=lambda x: float(x.replace("/", ".")))
+    except ValueError:
+        # Fallback para ordenação alfabética se houver chaves não numéricas/fracionárias inesperadas
+        nd_keys_sorted = sorted(nd_keys_raw)
+
+    tipos_tesouro = ["Padrão", "Metade", "Dobro", "Nenhum"]
+    return nd_keys_sorted, tipos_tesouro
 
 
-@app.route('/rolar', methods=['GET', 'POST'])
+# Definindo a rota principal como o rolador de tesouro
+@app.route('/', methods=['GET', 'POST'])
 def rolar_tesouro_page():
-    tesouro_resultado_completo = None
-    mensagem_erro = None
+    """
+    Rota principal para exibir a página de rolagem de tesouros e processar as solicitações.
+    """
+    nd_keys, tipos_tesouro = get_select_options()
 
-    # Valores para repopular o formulário
-    nd_selecionado_no_form = request.form.get('nd_chave') if request.method == 'POST' else (
-        valid_nd_keys[0] if valid_nd_keys else None)
-    tipo_tesouro_selecionado_no_form = request.form.get(
-        'tipo_tesouro') if request.method == 'POST' else "Padrão"
+    # Contexto inicial para o template
+    contexto = {
+        "nd_keys_disponiveis": nd_keys,
+        "tipos_tesouro_disponiveis": tipos_tesouro,
+        # Lista para armazenar os resultados de cada rolagem de tesouro
+        "tesouros_processados": [],
+        "erro": None  # Para mensagens de erro
+    }
 
     if request.method == 'POST':
-        nd_chave_input = request.form.get('nd_chave')
-        tipo_tesouro_input = request.form.get('tipo_tesouro')
+        try:
+            # O JavaScript envia os dados como JSON
+            if not request.is_json:
+                contexto["erro"] = "Formato de requisição inválido. Esperado JSON."
+                # Retorna o template com a mensagem de erro.
+                # O JavaScript no HTML tentará atualizar a página com este conteúdo.
+                # Bad Request
+                return render_template('rolar_tesouro.html', **contexto), 400
 
-        app.logger.info(
-            f"Recebido request para /rolar: ND='{nd_chave_input}', Tipo='{tipo_tesouro_input}'")
+            data = request.get_json()
+            # 'solicitacoes_tesouro' é a chave usada no JS
+            solicitacoes = data.get('solicitacoes_tesouro', [])
 
-        if not nd_chave_input:
-            mensagem_erro = "Por favor, selecione um Nível de Desafio (ND)."
-        elif nd_chave_input not in TABELA_8_1:  # Validação extra
-            mensagem_erro = f"Nível de Desafio (ND) '{nd_chave_input}' é inválido."
-        elif not tipo_tesouro_input:
-            mensagem_erro = "Por favor, selecione o Tipo de Tesouro da criatura."
-        else:
-            try:
-                # Atualiza os valores para repopular o formulário com a última submissão
-                nd_selecionado_no_form = nd_chave_input
-                tipo_tesouro_selecionado_no_form = tipo_tesouro_input
+            if not solicitacoes:
+                contexto["erro"] = "Nenhuma solicitação de tesouro recebida."
+            else:
+                todos_os_tesouros_gerados_para_template = []
+                for i, solicitacao in enumerate(solicitacoes):
+                    nd_chave = solicitacao.get('nd_chave')
+                    try:
+                        # Garante que a quantidade é um inteiro positivo
+                        quantidade = int(solicitacao.get('quantidade', 1))
+                        if quantidade < 1:
+                            quantidade = 1  # Default para 1 se for inválido
+                    except ValueError:
+                        quantidade = 1  # Default para 1 se não for um número
 
-                app.logger.info(
-                    f"Chamando gerar_tesouro_completo_por_nd(nd_chave_str='{nd_chave_input}', tipo_tesouro_modificador='{tipo_tesouro_input}')")
-                tesouro_resultado_completo = gerar_tesouro_completo_por_nd(
-                    nd_chave_input, tipo_tesouro_input)
-                app.logger.info(
-                    "Tesouro gerado com sucesso (estrutura preliminar):")
-                # Para debug, pode ser útil logar partes do resultado, mas ele pode ser grande
-                # app.logger.debug(tesouro_resultado_completo)
+                    tipo_tesouro_mod = solicitacao.get(
+                        'tipo_tesouro', 'Padrão')
 
-                if tesouro_resultado_completo and "erro" in tesouro_resultado_completo:
-                    mensagem_erro = tesouro_resultado_completo["erro"]
-                    app.logger.error(
-                        f"Erro retornado pela lógica do tesouro: {mensagem_erro}")
-                    # Limpa o resultado em caso de erro da lógica interna
-                    tesouro_resultado_completo = None
+                    if not nd_chave or nd_chave not in nd_keys:
+                        # Log de erro no servidor e informação para o usuário
+                        app.logger.error(
+                            f"ND inválido ou não fornecido na solicitação #{i+1}: {nd_chave}")
+                        # Adiciona um resultado de erro placeholder para esta solicitação específica
+                        todos_os_tesouros_gerados_para_template.append({
+                            "nd_processado": nd_chave or "Desconhecido",
+                            "modificador_tesouro": tipo_tesouro_mod,
+                            "sumario": f"Erro: ND '{nd_chave}' inválido ou não encontrado.",
+                            "moedas_e_riquezas": [],
+                            "itens_encontrados": [],
+                            "log_completo_rolagens": [f"Solicitação #{i+1}: ND '{nd_chave}' é inválido ou não foi encontrado nas opções disponíveis."]
+                        })
+                        continue  # Pula para a próxima solicitação
 
-            except ValueError as e:
-                app.logger.error(
-                    f"ValueError durante a geração de tesouro: {e}", exc_info=True)
-                mensagem_erro = f"Erro de valor nos dados de entrada: {e}"
-            except Exception as e:
-                app.logger.error(
-                    f"Exceção não esperada durante a geração de tesouro: {e}", exc_info=True)
-                mensagem_erro = "Ocorreu um erro inesperado no servidor. Tente novamente mais tarde."
+                    # Chama a função de gerar tesouro para cada unidade da quantidade
+                    for j in range(quantidade):
+                        app.logger.info(
+                            f"Processando solicitação #{i+1}, Tesouro #{j+1}: ND={nd_chave}, Mod={tipo_tesouro_mod}")
+                        # Cada chamada a gerar_tesouro_completo_por_nd retorna um dicionário completo
+                        # que o template 'rolar_tesouro.html' espera em 'tesouros_processados'
+                        tesouro_individual_gerado = gerar_tesouro_completo_por_nd(
+                            nd_chave, tipo_tesouro_mod)
 
-    return render_template(
-        'rolar_tesouro.html',
-        # Passa o dicionário completo do tesouro
-        tesouro_data=tesouro_resultado_completo,
-        erro=mensagem_erro,
-        nd_keys_disponiveis=valid_nd_keys,  # Para o dropdown de NDs
-        nd_selecionado=nd_selecionado_no_form,
-        tipos_tesouro_disponiveis=["Padrão", "Metade",
-                                   "Dobro", "Nenhum"],  # Para o dropdown de tipo
-        tipo_tesouro_selecionado=tipo_tesouro_selecionado_no_form
-    )
+                        # Adiciona um identificador para o log, se útil
+                        if "log_completo_rolagens" in tesouro_individual_gerado:
+                            tesouro_individual_gerado["log_completo_rolagens"].insert(
+                                0, f"--- Tesouro para ND {nd_chave} (Rolagem {j+1}/{quantidade} da Solicitação #{i+1}) ---")
+
+                        todos_os_tesouros_gerados_para_template.append(
+                            tesouro_individual_gerado)
+
+                contexto["tesouros_processados"] = todos_os_tesouros_gerados_para_template
+
+            # Retorna o template renderizado com os resultados (ou erros de validação)
+            # O JavaScript no lado do cliente irá usar este HTML para atualizar a página.
+            return render_template('rolar_tesouro.html', **contexto)
+
+        except Exception as e:
+            # Log detalhado do erro no servidor
+            app.logger.error(
+                f"Erro crítico ao processar tesouros: {e}", exc_info=True)
+            contexto["erro"] = f"Ocorreu um erro interno grave no servidor ao processar sua solicitação."
+            # Em caso de erro grave, ainda retorna o template para o JS atualizar a UI com a mensagem.
+            # Internal Server Error
+            return render_template('rolar_tesouro.html', **contexto), 500
+
+    # Para requisições GET, apenas renderiza a página com as opções iniciais
+    return render_template('rolar_tesouro.html', **contexto)
 
 
 if __name__ == '__main__':
-    # Configuração de logging para quando rodado com `python app.py`
-    # Em produção com `flask run` via Docker, o logging do Flask pode ser configurado de outras formas.
-    logging.basicConfig(
-        level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
-    # Para rodar com `python app.py` diretamente:
-    # app.run(host='0.0.0.0', port=5000, debug=True)
-    # Lembre-se que as variáveis de ambiente FLASK_DEBUG, FLASK_RUN_HOST, FLASK_RUN_PORT
-    # são usadas pelo comando `flask run` (definido no Dockerfile).
-    # Se não for usar `flask run`, descomente e ajuste a linha app.run() acima.
-    pass
+    # Configura um logger básico para debug
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)s: %(message)s')
+    # app.run(debug=True) # debug=True é ótimo para desenvolvimento
+    # Para produção, use um servidor WSGI como Gunicorn ou Waitress.
+    # Exemplo: app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))

@@ -4,27 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rolador de Tesouros T20</title>
+    <title>Rolador de Tesouros T20 (Revisado v2)</title>
     <style>
-        /* (Seus estilos CSS existentes podem permanecer aqui) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f0f2f5;
             color: #1c1e21;
-            line-height: 1.6;
+            line-height: 1.6
         }
 
         .container {
-            background-color: #ffffff;
+            background-color: #fff;
             padding: 25px 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
             width: 100%;
             max-width: 800px;
             margin: 20px auto;
-            text-align: left;
+            text-align: left
         }
 
         h1 {
@@ -32,7 +31,7 @@
             margin-bottom: 25px;
             font-size: 28px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 600
         }
 
         label {
@@ -41,11 +40,11 @@
             margin-bottom: 4px;
             font-weight: bold;
             color: #4b4f56;
-            font-size: 0.95em;
+            font-size: .95em
         }
 
         select,
-        input[type="number"] {
+        input[type=number] {
             padding: 10px;
             margin-top: 3px;
             border-radius: 5px;
@@ -53,12 +52,12 @@
             width: 100%;
             font-size: 15px;
             box-sizing: border-box;
-            background-color: #fff;
+            background-color: #fff
         }
 
         button {
             background-color: #5a0078;
-            color: white;
+            color: #fff;
             cursor: pointer;
             padding: 12px 18px;
             border: none;
@@ -66,11 +65,11 @@
             font-size: 16px;
             font-weight: bold;
             margin-top: 20px;
-            transition: background-color 0.2s ease-in-out;
+            transition: background-color .2s ease-in-out
         }
 
         button:hover {
-            background-color: #4a0063;
+            background-color: #4a0063
         }
 
         .nd-entry {
@@ -78,51 +77,58 @@
             align-items: flex-end;
             gap: 10px;
             margin-bottom: 15px;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border-radius: 6px;
+            background-color: #f9f9f9
         }
 
         .nd-entry>div {
-            flex-grow: 1;
+            flex-grow: 1
         }
 
         .nd-entry label {
-            margin-top: 0;
+            margin-top: 0
         }
 
         .remove-btn {
             background-color: #e53935;
             padding: 10px 12px;
             font-size: 14px;
-            margin-left: 5px;
-            margin-bottom: 0px;
-            align-self: center;
             height: 47px;
+            align-self: flex-end;
+            margin-bottom: 0
         }
 
         .add-btn {
             background-color: #43a047;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto
         }
 
         #btn-rolar-tudo {
             width: 100%;
             padding: 14px 20px;
             font-size: 17px;
-            margin-top: 30px;
+            margin-top: 30px
         }
 
-        /* Estilos para resultado e log (como antes) */
-        .erro-box {
+        .erro-box,
+        #js-erro-box {
             margin-top: 20px;
             padding: 15px;
             background-color: #ffebee;
             color: #c62828;
             border: 1px solid #ef9a9a;
             border-radius: 6px;
-            font-weight: 500;
+            font-weight: 500
+        }
+
+        #js-erro-box:empty {
+            display: none
         }
 
         .resultado-container {
@@ -130,7 +136,7 @@
             padding: 20px;
             border: 1px solid #e0e0e0;
             background-color: #f9fafb;
-            border-radius: 8px;
+            border-radius: 8px
         }
 
         .resultado-container h2 {
@@ -140,7 +146,7 @@
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
             margin-bottom: 20px;
-            font-weight: 600;
+            font-weight: 600
         }
 
         .resultado-container h3 {
@@ -150,60 +156,57 @@
             margin-bottom: 12px;
             border-bottom: 1px dashed #ccc;
             padding-bottom: 8px;
-            font-weight: 500;
+            font-weight: 500
         }
 
         .resultado-container ul {
             list-style-type: none;
-            padding-left: 0;
+            padding-left: 0
         }
 
         .resultado-container>ul>li.tesouro-bundle {
-            /* Cada 'pacote' de tesouro de uma rolagem */
             border: 1px solid #b39ddb;
-            /* Borda lilás para cada pacote */
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 6px;
-            background-color: #f5f3f7;
+            background-color: #f5f3f7
         }
 
         .resultado-container>ul>li>ul>li {
-            /* Itens dentro de um pacote */
             background-color: #fff;
             border: 1px solid #e8e8e8;
             padding: 12px 15px;
             margin-bottom: 10px;
             border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05)
         }
 
         .resultado-container ul ul {
             margin-top: 8px;
-            padding-left: 20px;
+            padding-left: 20px
         }
 
         .resultado-container ul ul li {
             background-color: #fdfdfd;
             padding: 8px 10px;
-            font-size: 0.95em;
-            border-left: 3px solid #5a0078;
+            font-size: .95em;
+            border-left: 3px solid #5a0078
         }
 
         .item-principal {
-            font-weight: bold;
+            font-weight: bold
         }
 
         .item-detalhe {
-            font-size: 0.9em;
+            font-size: .9em;
             color: #555;
             display: block;
-            margin-left: 5px;
+            margin-left: 5px
         }
 
         .rolagem-detalhe {
             font-family: "Consolas", "Menlo", "Courier New", Courier, monospace;
-            font-size: 0.85em;
+            font-size: .85em;
             color: #006400;
             margin-left: 10px;
             display: block;
@@ -211,7 +214,7 @@
             padding: 5px;
             background-color: #f0fff0;
             border-radius: 3px;
-            border: 1px solid #d0f0d0;
+            border: 1px solid #d0f0d0
         }
 
         .log-geral-rolagens {
@@ -221,17 +224,17 @@
             background-color: #e9e3f5;
             border: 1px solid #d1c4e9;
             border-radius: 4px;
-            font-size: 0.9em;
+            font-size: .9em;
             font-family: "Consolas", "Menlo", "Courier New", Courier, monospace;
-            line-height: 1.5;
+            line-height: 1.5
         }
 
         .log-geral-rolagens strong {
-            color: #5a0078;
+            color: #5a0078
         }
 
         .log-geral-rolagens div {
-            margin-bottom: 3px;
+            margin-bottom: 3px
         }
 
         .log-completo-box {
@@ -251,18 +254,18 @@
             border: 1px solid #444;
             line-height: 1.4;
             box-sizing: border-box;
-            position: relative;
+            position: relative
         }
 
         .log-completo-box div {
-            margin-bottom: 3px;
+            margin-bottom: 3px
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Rolador de Tesouros Tormenta 20</h1>
+        <h1>Rolador de Tesouros Tormenta 20 (Revisado v2)</h1>
 
         <form id="form-tesouros">
             <div id="nd-entries-container">
@@ -272,12 +275,13 @@
         </form>
 
         {% if erro %}
-        <div class="erro-box">
-            <p><strong>Erro:</strong> {{ erro }}</p>
+        <div class="erro-box" id="flask-erro-box">
+            <p><strong>Erro do Servidor:</strong> {{ erro }}</p>
         </div>
         {% endif %}
+        <div id="js-erro-box" class="erro-box"></div> {# Caixa de erro para o JavaScript popular, com a classe .erro-box
+        #}
 
-        {# Container para múltiplos resultados de tesouro #}
         <div id="resultados-multiplos-container">
             {% if tesouros_processados %}
             <h2>Resultados dos Tesouros:</h2>
@@ -288,7 +292,6 @@
                         <strong>Modificador:</strong> {{ tesouro_item_data.modificador_tesouro }}
                         {% if tesouro_item_data.sumario %} | <em>{{ tesouro_item_data.sumario }}</em> {% endif %}
                     </p>
-
                     {% if tesouro_item_data.log_completo_rolagens %}
                     <div class="log-geral-rolagens">
                         <strong>Resumo das Rolagens Principais (Tabela 8-1) para este ND:</strong><br>
@@ -301,313 +304,265 @@
                         {% endfor %}
                     </div>
                     {% endif %}
-
-                    {% if tesouro_item_data.moedas_e_riquezas %}
-                    <h3>Moedas e Riquezas:</h3>
-                    <ul>
-                        {% for mr_item in tesouro_item_data.moedas_e_riquezas %}
-                        <li>
-                            {% if mr_item.tipo_gerado == "moedas" %}
-                            <span class="item-principal">Moedas:</span> {{ mr_item.quantidade }} {{ mr_item.unidade }}
-                            {% elif mr_item.tipo_gerado == "riquezas_conjunto" %}
-                            <span class="item-principal">Riquezas ({{ mr_item.itens|length }} item(ns){% if
+                    {% if tesouro_item_data.moedas_e_riquezas %}<h3>Moedas e Riquezas:</h3>
+                    <ul>{% for mr_item in tesouro_item_data.moedas_e_riquezas %}<li>{% if mr_item.tipo_gerado ==
+                            "moedas" %}<span class="item-principal">Moedas:</span> {{ mr_item.quantidade }} {{
+                            mr_item.unidade }}{% elif mr_item.tipo_gerado == "riquezas_conjunto" %}<span
+                                class="item-principal">Riquezas ({{ mr_item.itens|length }} item(ns){% if
                                 mr_item.categoria_base %} de categoria '{{ mr_item.categoria_base }}'{% endif
-                                %}):</span>
-                            {% if mr_item.itens %}
-                            <ul>
-                                {% for riqueza_ind in mr_item.itens %}
-                                <li>
-                                    {{ riqueza_ind.descricao_exemplos }} <br>
-                                    <span class="item-detalhe">Valor Calculado: {{ riqueza_ind.valor_calculado_ts }} T$
-                                        (Médio: {{ riqueza_ind.valor_medio_ts }} T$)</span>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% else %}<span class="item-detalhe">Nenhum item de riqueza específico.</span>
-                            {% endif %}
-                            {% elif mr_item.tipo_gerado == "info_rolagem_dinheiro" %}
-                            <span class="item-detalhe"><em>{{ mr_item.mensagem }}</em></span>
-                            {% else %} Dinheiro/Riqueza: {{ mr_item }}
-                            {% endif %}
-                            {% if mr_item.detalhes_rolagem_especifica or mr_item.detalhes_rolagem_conjunto %}
-                            {% for detalhe_rol in (mr_item.detalhes_rolagem_especifica or
-                            mr_item.detalhes_rolagem_conjunto) %}
-                            <span class="rolagem-detalhe">{{ detalhe_rol }}</span>
-                            {% endfor %}
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-
-                    {% if tesouro_item_data.itens_encontrados %}
-                    <h3>Itens Encontrados:</h3>
-                    <ul>
-                        {% for item_gerado in tesouro_item_data.itens_encontrados %}
-                        <li>
-                            <span class="item-principal">
-                                {% if item_gerado.tipo_gerado == "item_diverso" %}Item Diverso: {{ item_gerado.nome }}
-                                {% elif item_gerado.tipo_gerado == "equipamento" %}Equipamento: {{ item_gerado.nome }}
-                                {% if item_gerado.quantidade %}(Qtd: {{ item_gerado.quantidade }}){% endif %} <span
-                                    class="item-detalhe">({{ item_gerado.subcategoria_equipamento }})</span>
-                                {% elif item_gerado.tipo_gerado == "item_superior" %}Item Superior: {{
-                                item_gerado.nome_base }} ({{ item_gerado.categoria_base }}) com {{
-                                item_gerado.melhorias_aplicadas|join(', ') }}
-                                {% elif item_gerado.tipo_gerado == "pocoes_conjunto" %}Poções ({{
-                                item_gerado.itens|length }} unidade(s)):
-                                {% elif item_gerado.tipo_gerado == "arma_magica" %}Arma Mágica: {{ item_gerado.nome_base
-                                }} (Cat: {{ item_gerado.categoria_magica }})
-                                {% elif item_gerado.tipo_gerado == "armadura_escudo_magico" %}Armadura/Escudo Mágico: {{
+                                %}):</span>{% if mr_item.itens %}<ul>{% for riqueza_ind in mr_item.itens %}<li>{{
+                                    riqueza_ind.descricao_exemplos }} <br><span class="item-detalhe">Valor: {{
+                                        riqueza_ind.valor_calculado_ts }} T$</span></li>{% endfor %}</ul>{% else %}<span
+                                class="item-detalhe">Nenhum.</span>{% endif %}{% elif mr_item.tipo_gerado ==
+                            "info_rolagem_dinheiro" %}<span class="item-detalhe"><em>{{ mr_item.mensagem
+                                    }}</em></span>{% else %} Dinheiro/Riqueza: {{ mr_item }}{% endif %}{% if
+                            mr_item.detalhes_rolagem_especifica or mr_item.detalhes_rolagem_conjunto %}{% for
+                            detalhe_rol in (mr_item.detalhes_rolagem_especifica or mr_item.detalhes_rolagem_conjunto)
+                            %}<span class="rolagem-detalhe">{{ detalhe_rol }}</span>{% endfor %}{% endif %}</li>{%
+                        endfor %}</ul>{% endif %}
+                    {% if tesouro_item_data.itens_encontrados %}<h3>Itens Encontrados:</h3>
+                    <ul>{% for item_gerado in tesouro_item_data.itens_encontrados %}<li><span class="item-principal">{%
+                                if item_gerado.tipo_gerado == "item_diverso" %}Item Diverso: {{ item_gerado.nome }}{%
+                                elif item_gerado.tipo_gerado == "equipamento" %}Equipamento: {{ item_gerado.nome }}{% if
+                                item_gerado.quantidade %}(Qtd: {{ item_gerado.quantidade }}){% endif %} <span
+                                    class="item-detalhe">({{ item_gerado.subcategoria_equipamento }})</span>{% elif
+                                item_gerado.tipo_gerado == "item_superior" %}Item Superior: {{ item_gerado.nome_base }}
+                                ({{ item_gerado.categoria_base }}) com {{ item_gerado.melhorias_aplicadas|join(', ')
+                                }}{% elif item_gerado.tipo_gerado == "pocoes_conjunto" %}Poções ({{
+                                item_gerado.itens|length }} un.):{% elif item_gerado.tipo_gerado == "arma_magica" %}Arma
+                                Mágica: {{ item_gerado.nome_base }} (Cat: {{ item_gerado.categoria_magica }}){% elif
+                                item_gerado.tipo_gerado == "armadura_escudo_magico" %}Armadura/Escudo Mágico: {{
                                 item_gerado.nome_base }} (Cat: {{ item_gerado.categoria_magica }}) <span
-                                    class="item-detalhe">Tipo Base: {{item_gerado.tipo_base}}</span>
-                                {% elif item_gerado.tipo_gerado == "acessorio_magico" %}Acessório Mágico: {{
-                                item_gerado.nome }} (Cat: {{ item_gerado.categoria_magica }}) <span
-                                    class="item-detalhe">Preço: {{ item_gerado.preco_ts }} T$</span>
-                                {% elif item_gerado.tipo_gerado == "info_rolagem_item" %} <span
-                                    class="item-detalhe"><em>{{ item_gerado.mensagem }}</em></span>
-                                {% else %} {{ item_gerado.tipo_gerado|replace("_", " ")|title }}: {{ item_gerado.nome or
-                                item_gerado.descricao or item_gerado.dados_brutos }}
-                                {% endif %}
-                            </span>
-
-                            {% if item_gerado.tipo_gerado == "pocoes_conjunto" and item_gerado.itens %}
-                            <ul>
-                                {% for poc_ind in item_gerado.itens %}
-                                <li>
-                                    {{ poc_ind.nome }} - {{ poc_ind.descricao_completa }} {% if poc_ind.preco_ts
-                                    %}(Preço: {{ poc_ind.preco_ts }} T$){% endif %}
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% elif item_gerado.tipo_gerado in ["arma_magica", "armadura_escudo_magico"] and
-                            item_gerado.encantos %}
-                            <span class="item-detalhe">Encantos:</span>
-                            <ul>
-                                {% for encanto in item_gerado.encantos %}
-                                {% if encanto.tipo_especial %}
-                                <li><strong>{{ encanto.nome }}</strong> {% if encanto.preco_ts %}(Preço: {{
-                                    encanto.preco_ts }} T$){% endif %}</li>
-                                {% else %}
-                                <li>{{ encanto.nome }}: {{ encanto.efeito }} {% if encanto.custo %}(Custo: {{
-                                    encanto.custo }}){% endif %}</li>
-                                {% endif %}
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-
-                            {% if item_gerado.detalhes_rolagem_especifica or item_gerado.detalhes_rolagem_conjunto %}
-                            {% for detalhe_rol in (item_gerado.detalhes_rolagem_especifica or
-                            item_gerado.detalhes_rolagem_conjunto) %}
-                            <span class="rolagem-detalhe">{{ detalhe_rol }}</span>
-                            {% endfor %}
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    {# Opcional: Log completo do processamento para este pacote de tesouro específico #}
-                    {% if tesouro_item_data.log_completo_rolagens %}
-                    <h3 style="margin-top:20px; font-size:1em; color:#666;">Log de Processamento para este ND:</h3>
+                                    class="item-detalhe">Tipo Base: {{item_gerado.tipo_base}}</span>{% elif
+                                item_gerado.tipo_gerado == "acessorio_magico" %}Acessório Mágico: {{ item_gerado.nome }}
+                                (Cat: {{ item_gerado.categoria_magica }}) <span class="item-detalhe">Preço: {{
+                                    item_gerado.preco_ts }} T$</span>{% elif item_gerado.tipo_gerado ==
+                                "info_rolagem_item" %}<span class="item-detalhe"><em>{{ item_gerado.mensagem
+                                        }}</em></span>{% else %} {{ item_gerado.tipo_gerado|replace("_", " ")|title }}:
+                                {{ item_gerado.nome or item_gerado.descricao or item_gerado.dados_brutos }}{% endif
+                                %}</span>{% if item_gerado.tipo_gerado == "pocoes_conjunto" and item_gerado.itens %}<ul>
+                                {% for poc_ind in item_gerado.itens %}<li>{{ poc_ind.nome }} - {{
+                                    poc_ind.descricao_completa }} {% if poc_ind.preco_ts %}(Preço: {{ poc_ind.preco_ts
+                                    }} T$){% endif %}</li>{% endfor %}</ul>{% elif item_gerado.tipo_gerado in
+                            ["arma_magica", "armadura_escudo_magico"] and item_gerado.encantos %} <span
+                                class="item-detalhe">Encantos:</span>
+                            <ul>{% for encanto in item_gerado.encantos %}{% if encanto.tipo_especial %}<li><strong>{{
+                                        encanto.nome }}</strong> {% if encanto.preco_ts %}(Preço: {{ encanto.preco_ts }}
+                                    T$){% endif %}</li>{% else %}<li>{{ encanto.nome }}: {{ encanto.efeito }} {% if
+                                    encanto.custo %}(Custo: {{ encanto.custo }}){% endif %}</li>{% endif %}{% endfor %}
+                            </ul>{% endif %}{% if item_gerado.detalhes_rolagem_especifica or
+                            item_gerado.detalhes_rolagem_conjunto %}{% for detalhe_rol in
+                            (item_gerado.detalhes_rolagem_especifica or item_gerado.detalhes_rolagem_conjunto) %}<span
+                                class="rolagem-detalhe">{{ detalhe_rol }}</span>{% endfor %}{% endif %}
+                        </li>{% endfor %}</ul>{% endif %}
+                    {% if tesouro_item_data.log_completo_rolagens %}<h3
+                        style="margin-top:20px;font-size:1em;color:#666;">Log de Processamento:</h3>
                     <div class="log-completo-box"
-                        style="max-height:150px; font-size:0.85em; background-color: #f0f0f0; color:#444;">
-                        {% for log_entry in tesouro_item_data.log_completo_rolagens %}
-                        <div>{{ log_entry }}</div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                        style="max-height:150px;font-size:.85em;background-color:#f0f0f0;color:#444;">{% for log_entry
+                        in tesouro_item_data.log_completo_rolagens %}<div>{{ log_entry }}</div>{% endfor %}</div>{%
+                    endif %}
                 </li>
                 {% endfor %}
             </ul>
             {% elif request.method == 'POST' and not erro %}
             <div class="resultado-container">
                 <h2>Resultado do Tesouro</h2>
-                <p>Nenhum tesouro específico foi gerado (ou o modificador foi "Nenhum" para todas as entradas).</p>
+                <p>Nenhum tesouro específico foi gerado.</p>
             </div>
             {% endif %}
         </div>
     </div>
+
     <script>
-        // Passando as chaves de ND e tipos de tesouro do Flask para o JavaScript
-        const ndKeysDisponiveis = {{ nd_keys_disponiveis| tojson | safe }};
-        const tiposTesouroDisponiveis = {{ tipos_tesouro_disponiveis| tojson | safe }};
-        let entryCounter = 0;
+        // --------------------------------------------------------------------
+        // TESTE INICIAL ABSOLUTO: Este alert DEVE aparecer se o script rodar.
+        // --------------------------------------------------------------------
+        alert("ALERTA DE TESTE: O bloco de script em rolar_tesouro.html está começando a ser executado!");
 
-        function addNdEntry(ndSelecionado = null, quantidade = 1, tipoTesouro = "Padrão") {
-            entryCounter++;
-            const container = document.getElementById('nd-entries-container');
-            const entryDiv = document.createElement('div');
-            entryDiv.classList.add('nd-entry');
-            entryDiv.id = 'nd-entry-' + entryCounter;
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("LOG: Evento DOMContentLoaded disparado. Script principal iniciando.");
 
-            let ndOptions = '';
-            ndKeysDisponiveis.forEach(key => {
-                ndOptions += `<option value="${key}" ${key === ndSelecionado ? 'selected' : ''}>${key}</option>`;
-            });
+            // --- Elementos do DOM ---
+            const ndEntriesContainer = document.getElementById('nd-entries-container');
+            const addNdButton = document.getElementById('add-nd-btn');
+            const formTesouros = document.getElementById('form-tesouros');
+            const jsErroBox = document.getElementById('js-erro-box');
 
-            let tipoOptions = '';
-            tiposTesouroDisponiveis.forEach(tipo => {
-                tipoOptions += `<option value="${tipo}" ${tipo === tipoTesouro ? 'selected' : ''}>${tipo}</option>`;
-            });
+            if (!ndEntriesContainer) console.error("ERRO DOM: 'nd-entries-container' não encontrado!");
+            if (!addNdButton) console.error("ERRO DOM: 'add-nd-btn' não encontrado!");
+            if (!formTesouros) console.error("ERRO DOM: 'form-tesouros' não encontrado!");
+            if (!jsErroBox) console.error("ERRO DOM: 'js-erro-box' não encontrado!");
 
-            entryDiv.innerHTML = \`
-                <div>
-                    <label for="nd_chave_\${entryCounter}">ND:</label>
-                    <select name="nd_chave" id="nd_chave_\${entryCounter}">
-                        ${ndOptions}
-                    </select>
-                </div>
-                <div>
-                    <label for="quantidade_\${entryCounter}">Quantidade:</label>
-                    <input type="number" name="quantidade" id="quantidade_\${entryCounter}" value="\${quantidade}" min="1" style="width: 80px;">
-                </div>
-                <div>
-                    <label for="tipo_tesouro_\${entryCounter}">Tipo de Tesouro:</label>
-                    <select name="tipo_tesouro" id="tipo_tesouro_\${entryCounter}">
-                        ${tipoOptions}
-                    </select>
-                </div>
-                <button type="button" class="remove-btn" onclick="removeNdEntry('nd-entry-\${entryCounter}')">X</button>
-            \`;
-            container.appendChild(entryDiv);
+            // --- Dados do Flask ---
+            // Estes blocos {{ ... }} são substituídos pelo Flask ANTES de o navegador receber o HTML.
+            // O VSCode pode mostrar erros aqui porque não entende Jinja, mas deve funcionar no navegador.
+            let ndKeysDisponiveis = {{ nd_keys_disponiveis| tojson | safe
+        }};
+        let tiposTesouroDisponiveis = {{ tipos_tesouro_disponiveis| tojson | safe }};
+
+        // Validação e fallback para os dados do Flask
+        if (!Array.isArray(ndKeysDisponiveis)) {
+            console.warn("AVISO: 'nd_keys_disponiveis' não é um array ou é null. Usando array vazio. Valor recebido:", ndKeysDisponiveis);
+            ndKeysDisponiveis = [];
+        }
+        if (!Array.isArray(tiposTesouroDisponiveis)) {
+            console.warn("AVISO: 'tiposTesouroDisponiveis' não é um array ou é null. Usando array vazio. Valor recebido:", tiposTesouroDisponiveis);
+            tiposTesouroDisponiveis = [];
         }
 
-        function removeNdEntry(entryId) {
+        console.log("LOG: NDs Disponíveis (processados no JS):", ndKeysDisponiveis);
+        console.log("LOG: Tipos de Tesouro (processados no JS):", tiposTesouroDisponiveis);
+
+        let entryCounter = 0;
+
+        // --- Funções ---
+        window.removeNdEntryJS = function (entryId) { // Exposta globalmente para o onclick
             const entry = document.getElementById(entryId);
             if (entry) {
                 entry.remove();
+                console.log(`LOG: Entrada de ND '${entryId}' removida.`);
+            } else {
+                console.warn(`AVISO: Tentativa de remover entrada '${entryId}' falhou: elemento não encontrado.`);
             }
         }
 
-        document.getElementById('add-nd-btn').addEventListener('click', function() {
-            addNdEntry(ndKeysDisponiveis[0] || null); // Adiciona com o primeiro ND como default
-        });
-
-        document.getElementById('form-tesouros').addEventListener('submit', function(event) {
-            event.preventDefault(); // Previne o envio tradicional do formulário
-
-            const entriesContainer = document.getElementById('nd-entries-container');
-            const ndEntries = entriesContainer.getElementsByClassName('nd-entry');
-            const dataParaEnviar = [];
-
-            for (let i = 0; i < ndEntries.length; i++) {
-                const entry = ndEntries[i];
-                const ndChave = entry.querySelector('select[name="nd_chave"]').value;
-                const quantidade = parseInt(entry.querySelector('input[name="quantidade"]').value, 10);
-                const tipoTesouro = entry.querySelector('select[name="tipo_tesouro"]').value;
-
-                if (quantidade > 0) {
-                    dataParaEnviar.push({
-                        nd_chave: ndChave,
-                        quantidade: quantidade,
-                        tipo_tesouro: tipoTesouro
-                    });
-                }
-            }
-
-            // Limpa resultados anteriores e erros
-            document.getElementById('resultados-multiplos-container').innerHTML = '';
-            const erroBox = document.querySelector('.erro-box');
-            if (erroBox) erroBox.innerHTML = '';
-
-
-            if (dataParaEnviar.length === 0) {
-                alert("Por favor, adicione pelo menos uma entrada de ND com quantidade maior que zero.");
+        function addNdEntry(ndSelecionado = null, quantidade = 1, tipoTesouro = "Padrão") {
+            if (!ndEntriesContainer) {
+                console.error("ERRO: Não é possível adicionar entrada, 'nd-entries-container' não encontrado.");
                 return;
             }
+            entryCounter++;
+            const entryId = 'nd-entry-' + entryCounter;
+            console.log(`LOG: Adicionando entrada de ND #${entryCounter} (ID: ${entryId}). ND Padrão: ${ndSelecionado}`);
 
-            fetch("{{ url_for('rolar_tesouro_page') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 'solicitacoes_tesouro': dataParaEnviar }) // Envia um objeto com uma chave
-            })
-            .then(response => response.text()) // Pega a resposta como texto para poder injetar o HTML renderizado
-            .then(html => {
-                // O Flask agora vai renderizar o template com os múltiplos resultados.
-                // Precisamos substituir uma parte da página atual com este novo HTML.
-                // É mais simples recarregar a página com os dados ou usar AJAX para atualizar uma div.
-                // Por agora, vamos fazer um "truque" de pegar o corpo do novo HTML e substituir.
-                // Uma abordagem mais robusta usaria JSON para os dados e JS para renderizar no cliente,
-                // ou faria o Flask retornar apenas o fragmento HTML dos resultados.
+            const entryDiv = document.createElement('div');
+            entryDiv.classList.add('nd-entry');
+            entryDiv.id = entryId;
 
-                // Para simplificar, vamos assumir que o backend agora retorna a página inteira
-                // e vamos apenas recarregar a página com os resultados (o Flask já faz isso
-                // se o POST renderizar o mesmo template com os novos dados).
-                // A linha abaixo substituiria o documento inteiro.
-                // document.open();
-                // document.write(html);
-                // document.close();
-                // Se o Flask está renderizando o template com 'tesouros_processados', o HTML já virá atualizado.
-                // A lógica do Flask no POST já faz render_template. A resposta do fetch será o HTML da página inteira.
-                // A forma mais simples de atualizar é deixar o formulário submeter normalmente (sem preventDefault e fetch)
-                // se o backend já está preparado para processar e re-renderizar.
-                // No entanto, para enviar JSON, o fetch é necessário.
-                // O desafio é como atualizar a página com o HTML retornado pelo fetch.
+            let ndOptionsHtml = '';
+            if (ndKeysDisponiveis.length > 0) {
+                ndKeysDisponiveis.forEach(key => {
+                    ndOptionsHtml += `<option value="${key}" ${key === ndSelecionado ? 'selected' : ''}>${key}</option>`;
+                });
+            } else {
+                ndOptionsHtml = '<option value="">-- NDs Indisponíveis --</option>';
+            }
 
-                // Vamos substituir o conteúdo do body para exibir a nova página renderizada
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                document.body.innerHTML = doc.body.innerHTML;
+            let tipoOptionsHtml = '';
+            if (tiposTesouroDisponiveis.length > 0) {
+                tiposTesouroDisponiveis.forEach(tipo => {
+                    tipoOptionsHtml += `<option value="${tipo}" ${tipo === tipoTesouro ? 'selected' : ''}>${tipo}</option>`;
+                });
+            } else {
+                tipoOptionsHtml = '<option value="Padrão">Padrão (Tipos Indisponíveis)</option>';
+            }
 
-                // Re-adicionar o listener para o novo formulário (se a página foi totalmente substituída)
-                // Ou melhor, seletivamente atualizar a div de resultados.
-                // Para este exemplo, se a substituição do body funcionar, o JS precisaria ser re-executado
-                // para os botões de add/remove se eles também forem substituídos.
-                // A solução mais limpa para atualizações parciais é o backend retornar JSON
-                // e o JS construir o HTML dos resultados.
-                // Como o Flask está renderizando o template inteiro, a substituição do body é uma forma.
+            entryDiv.innerHTML = `
+                    <div>
+                        <label for="nd_chave_${entryCounter}">ND:</label>
+                        <select name="nd_chave" id="nd_chave_${entryCounter}" ${ndKeysDisponiveis.length === 0 ? 'disabled' : ''}>${ndOptionsHtml}</select>
+                    </div>
+                    <div>
+                        <label for="quantidade_${entryCounter}">Qtd:</label>
+                        <input type="number" name="quantidade" id="quantidade_${entryCounter}" value="${quantidade}" min="1" style="width: 70px;">
+                    </div>
+                    <div>
+                        <label for="tipo_tesouro_${entryCounter}">Tipo:</label>
+                        <select name="tipo_tesouro" id="tipo_tesouro_${entryCounter}">${tipoOptionsHtml}</select>
+                    </div>
+                    <button type="button" class="remove-btn" onclick="removeNdEntryJS('${entryId}')">X</button>
+                `;
+            ndEntriesContainer.appendChild(entryDiv);
+            console.log(`LOG: Entrada de ND #${entryCounter} adicionada ao DOM.`);
+        }
 
-                // Se o Flask/Jinja está configurado corretamente, a submissão padrão do formulário (sem JS fetch)
-                // e o render_template no lado do servidor já devem atualizar a página com os resultados.
-                // A questão do JSON é se quisermos evitar um full page reload e fazer algo mais SPA-like.
+        // --- Event Listeners e Inicialização ---
+        if (addNdButton) {
+            addNdButton.addEventListener('click', function () {
+                console.log("LOG: Botão 'Adicionar Outro ND' clicado.");
+                const primeiroNd = (ndKeysDisponiveis.length > 0) ? ndKeysDisponiveis[0] : null;
+                addNdEntry(primeiroNd);
+            });
+            console.log("LOG: Listener do botão 'Adicionar Outro ND' configurado.");
+        }
 
-                // Por enquanto, o document.body.innerHTML = doc.body.innerHTML;  tentará recarregar.
-                // Re-adicionar o script para os botões funcionarem após a recarga do body:
-                // (Esta parte é complexa e pode precisar de mais refinamento para uma SPA real)
-                // Ou simplesmente não fazer o preventDefault e deixar o form submeter tradicionalmente
-                // se o backend for modificado para pegar os dados do form e não JSON.
+        if (formTesouros) {
+            formTesouros.addEventListener('submit', function (event) {
+                event.preventDefault();
+                console.log("LOG: Formulário 'form-tesouros' submetido.");
+                if (jsErroBox) { jsErroBox.innerHTML = ''; jsErroBox.style.display = 'none'; } // Limpa erro JS
 
-                // Considerando que o backend app.py vai ser modificado para receber JSON,
-                // o fetch é a forma correta. A atualização da página é o desafio.
-                // Uma forma simples é que o backend, após processar o JSON, redirecione para a mesma página
-                // com os resultados em session ou como query params (menos ideal para dados complexos).
-                // Ou, o JS que recebe o HTML renderizado o injeta em uma div específica.
-
-                // Vamos tentar injetar na div de resultados e na div de erro.
-                const novoResultadoContainer = doc.getElementById('resultados-multiplos-container');
-                const antigoResultadoContainer = document.getElementById('resultados-multiplos-container');
-                if (novoResultadoContainer && antigoResultadoContainer) {
-                    antigoResultadoContainer.innerHTML = novoResultadoContainer.innerHTML;
-                }
-                const novoErroBox = doc.querySelector('.erro-box'); // Pode não existir no 'doc' se não houver erro
-                const antigoErroBox = document.querySelector('.erro-box');
-                if (antigoErroBox) { // Limpa o erro antigo
-                    antigoErroBox.innerHTML = ""; 
-                    if (novoErroBox && novoErroBox.innerHTML.trim() !== "") {
-                         antigoErroBox.innerHTML = novoErroBox.innerHTML;
+                const entries = ndEntriesContainer.getElementsByClassName('nd-entry');
+                let dataParaEnviar = [];
+                for (let i = 0; i < entries.length; i++) {
+                    const ndChave = entries[i].querySelector('select[name="nd_chave"]').value;
+                    const quantidade = parseInt(entries[i].querySelector('input[name="quantidade"]').value, 10);
+                    const tipoTesouro = entries[i].querySelector('select[name="tipo_tesouro"]').value;
+                    if (ndChave && quantidade > 0) {
+                        dataParaEnviar.push({ nd_chave: ndChave, quantidade: quantidade, tipo_tesouro: tipoTesouro });
                     }
                 }
+                console.log("LOG: Dados para enviar:", dataParaEnviar);
 
+                if (dataParaEnviar.length === 0) {
+                    if (jsErroBox) {
+                        jsErroBox.innerHTML = '<p>Adicione pelo menos uma entrada de ND válida.</p>';
+                        jsErroBox.style.display = 'block';
+                    }
+                    console.warn("AVISO: Nenhuma entrada válida para submissão.");
+                    return;
+                }
 
-            })
-            .catch(error => {
-                console.error('Erro ao enviar dados:', error);
-                const erroBox = document.querySelector('.erro-box');
-                if(erroBox) erroBox.innerHTML = '<p><strong>Erro de comunicação ao rolar tesouros. Tente novamente.</strong></p>';
+                fetch("{{ url_for('rolar_tesouro_page') }}", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 'solicitacoes_tesouro': dataParaEnviar })
+                })
+                    .then(response => {
+                        console.log("LOG: Resposta do fetch. Status:", response.status);
+                        return response.text();
+                    })
+                    .then(htmlResponse => {
+                        const parser = new DOMParser();
+                        const newDoc = parser.parseFromString(htmlResponse, 'text/html');
+                        const newResultados = newDoc.getElementById('resultados-multiplos-container');
+                        const oldResultados = document.getElementById('resultados-multiplos-container');
+                        if (newResultados && oldResultados) oldResultados.innerHTML = newResultados.innerHTML;
+
+                        const newFlaskError = newDoc.getElementById('flask-erro-box');
+                        const oldFlaskError = document.getElementById('flask-erro-box');
+                        if (oldFlaskError) {
+                            if (newFlaskError && newFlaskError.textContent.trim()) {
+                                oldFlaskError.innerHTML = newFlaskError.innerHTML;
+                                oldFlaskError.style.display = 'block';
+                            } else {
+                                oldFlaskError.innerHTML = '';
+                                oldFlaskError.style.display = 'none';
+                            }
+                        }
+                        console.log("LOG: DOM atualizado com resposta do fetch.");
+                    })
+                    .catch(error => {
+                        console.error('ERRO Fetch:', error);
+                        if (jsErroBox) {
+                            jsErroBox.innerHTML = `<p>Erro de comunicação: ${error.message}</p>`;
+                            jsErroBox.style.display = 'block';
+                        }
+                    });
             });
-        });
+            console.log("LOG: Listener do formulário 'form-tesouros' configurado.");
+        }
 
-        // Adiciona a primeira entrada de ND ao carregar a página
-        window.onload = function() {
-            if (document.getElementById('nd-entries-container').children.length === 0) {
-                 // Pega os valores selecionados que o Flask pode ter passado (para repopular após POST)
-                const ndInicial = "{{ nd_selecionado if nd_selecionado else (nd_keys_disponiveis[0] if nd_keys_disponiveis else '') }}";
-                const qtdInicial = 1; // Ou {{ quantidade_selecionada }} se você passar isso do Flask
-                const tipoInicial = "{{ tipo_tesouro_selecionado | default('Padrão', true) }}";
-                addNdEntry(ndInicial, qtdInicial, tipoInicial);
-            }
-        };
+        // Adicionar a primeira entrada automaticamente
+        if (ndEntriesContainer && ndEntriesContainer.children.length === 0) {
+            console.log("LOG: Nenhuma entrada inicial. Adicionando a primeira.");
+            const primeiroNd = (ndKeysDisponiveis.length > 0) ? ndKeysDisponiveis[0] : null;
+            const primeiroTipo = (tiposTesouroDisponiveis.length > 0) ? tiposTesouroDisponiveis[0] : "Padrão";
+            addNdEntry(primeiroNd, 1, primeiroTipo);
+        } else {
+            console.log("LOG: Entradas iniciais já existem ou container não encontrado. Nenhuma entrada automática adicionada.");
+        }
+        }); // Fim do DOMContentLoaded
     </script>
 </body>
 
